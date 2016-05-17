@@ -3,7 +3,7 @@
 const linkedListCycle = (head) => {
   // do a tortise/hare thing
   if (!head) {
-    return false;
+    return null;
   }
   var tortiseCount = 0;
   var tortHareMeet = null;
@@ -17,18 +17,29 @@ const linkedListCycle = (head) => {
     tortise = tortise.next;
     tortiseCount++;
   }
-  return null;
-  // when they reach each other
-    // its a merge linkedList problem
-      // count the number of nodes it takes to reach the tort/hare point
-        // from the tort/hare point
-        // from the head
-      // give the longer distance a head start equal to the difference between these two
-        // count again from head start and smaller of the two
-          // compare each node, checking to see if they match
-            // return the matching node
-
-}
+  if (!tortHareMeet) {
+    return null;
+  }
+  hare = hare === tortHareMeet ? hare.next : hare;
+  tortise = head;
+  for (var circumference = 0; hare != tortHareMeet; circumference++) {
+    hare = hare.next;
+  }
+  while (circumference > tortiseCount) {
+    hare = hare.next;
+    circumference--;
+  }
+  while (tortiseCount > circumference) {
+    tortise = tortise.next;
+    tortiseCount--;
+  }
+  // tortiseCount and circumference are now equal
+  while (tortise !== hare) {
+    tortise = tortise.next;
+    hare = hare.next;
+  }
+  return hare.val;
+};
 
 function ListNode(val) {
    this.val = val;
@@ -56,3 +67,5 @@ node7.next = node8;
 node8.next = node9;
 node9.next = node10;
 node10.next = node6;
+
+console.log(linkedListCycle(node1));
