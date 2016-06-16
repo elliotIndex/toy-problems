@@ -1,6 +1,6 @@
 // actually linked list 2
 
-const linkedListCycle = (head) => {
+var linkedListCycle = function(head) {
   // do a tortise/hare thing
   if (!head) {
     return null;
@@ -9,21 +9,29 @@ const linkedListCycle = (head) => {
   var tortHareMeet = null;
   var tortise = head;
   var hare = head.next;
-  while (hare && hare.next) {
+  while (!tortHareMeet && hare && hare.next && tortiseCount < 25) {
     hare = hare.next;
-    if (tortise === hare) { tortHareMeet = hare; }
-    hare = hare.next;
-    if (tortise === hare) { tortHareMeet = hare; }
-    tortise = tortise.next;
-    tortiseCount++;
+    if (tortise === hare) {
+      tortHareMeet = hare;
+    } else {
+      tortise = tortise.next;
+      tortiseCount++;
+      hare = hare.next;
+      if (tortise === hare) {
+        tortHareMeet = hare;
+      }
+    }
+
   }
   if (!tortHareMeet) {
     return null;
   }
   hare = hare === tortHareMeet ? hare.next : hare;
   tortise = head;
-  for (var circumference = 0; hare != tortHareMeet; circumference++) {
+  var circumference = 1;
+  while (hare != tortHareMeet && circumference < 100) {
     hare = hare.next;
+    circumference++;
   }
   while (circumference > tortiseCount) {
     hare = hare.next;
@@ -33,8 +41,7 @@ const linkedListCycle = (head) => {
     tortise = tortise.next;
     tortiseCount--;
   }
-  // tortiseCount and circumference are now equal
-  while (tortise !== hare) {
+  for (var i = 0; i < 1000 && tortise !== hare; i++) {
     tortise = tortise.next;
     hare = hare.next;
   }
@@ -66,6 +73,4 @@ node6.next = node7;
 node7.next = node8;
 node8.next = node9;
 node9.next = node10;
-node10.next = node6;
-
-console.log(linkedListCycle(node1));
+node10.next = node10;
