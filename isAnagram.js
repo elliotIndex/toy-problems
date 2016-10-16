@@ -1,10 +1,4 @@
-/**
- * @param {string} s
- * @param {string} t
- * @return {boolean}
- */
-
-var isAnagram = function(s, t) {
+function isAnagram(s, t) {
 
     var sArr = s.split('').sort();
     var tArr = t.split('').sort();
